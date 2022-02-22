@@ -34,7 +34,6 @@ public class ProductoServiceImpl implements ProductoService {
         Producto producto = getById(id);
         producto.setNombre(newProducto.getNombre());
         producto.setDescripcion(newProducto.getDescripcion());
-        producto.setImagen(newProducto.getImagen());
         producto.setPrecio(newProducto.getPrecio());
         producto.setDetalle(newProducto.getDetalle());
         producto.setCaracteristica(newProducto.getCaracteristica());

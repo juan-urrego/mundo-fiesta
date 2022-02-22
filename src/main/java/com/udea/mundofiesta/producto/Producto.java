@@ -28,9 +28,6 @@ public class Producto {
     @Column(name = "pro_precio", nullable = false)
     private double precio;
 
-    @Column(name = "pro_imagen", nullable = false)
-    private String imagen;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "pro_detalle_id")
     private Detalle detalle;

@@ -1,4 +1,4 @@
-package com.udea.mundofiesta.security.entity;
+package com.udea.mundofiesta.usuario;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

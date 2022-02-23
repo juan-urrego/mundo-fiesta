@@ -1,7 +1,7 @@
 package com.udea.mundofiesta.pedido;
 
 import com.udea.mundofiesta.productoPedido.ProductoPedido;
-import com.udea.mundofiesta.security.entity.Usuario;
+import com.udea.mundofiesta.usuario.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

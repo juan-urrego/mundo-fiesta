@@ -26,13 +26,18 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = getByEmail(username);
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        usuario.getRoles().forEach(rol -> authorities.add(new SimpleGrantedAuthority(rol.getNombre())));
+        usuario.getRoles().forEach(rol -> authorities.add(new SimpleGrantedAuthority(rol.getNombre().name())));
         return new User(usuario.getEmail(), usuario.getPassword(), authorities);
     }
 
     @Override
     public List<Usuario> getAll() {
         return usuarioRepository.findAll();
+    }
+
+    @Override
+    public List<Usuario> getAllAdmins() {
+        return usuarioRepository.findAllByRoles_Nombre(RolNombre.ROLE_ADMIN);
     }
 
     @Override

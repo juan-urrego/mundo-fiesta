@@ -1,14 +1,17 @@
 package com.udea.mundofiesta.seguridad;
 
+import com.udea.mundofiesta.jwt.AuthenticationFilter;
+import com.udea.mundofiesta.jwt.AuthorizationFilter;
+import com.udea.mundofiesta.usuario.RolNombre;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -24,14 +27,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManagerBean());
+        authenticationFilter.setFilterProcessesUrl("/login");
+        AuthorizationFilter authorizationFilter = new AuthorizationFilter();
         http
                 .csrf().disable()
-                .authorizeRequests()
-                    .antMatchers(HttpMethod.POST,"/usuarios").permitAll()
-                    .anyRequest()
-                    .authenticated()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .httpBasic();
+                .addFilter(authenticationFilter)
+                .addFilterAfter(authorizationFilter, AuthenticationFilter.class)
+                .authorizeRequests()
+                    .antMatchers("/login/**").permitAll()
+                    .antMatchers("/usuarios/**").hasAuthority(RolNombre.ROLE_ADMIN.name())
+                    .anyRequest().authenticated();
     }
 
     @Override

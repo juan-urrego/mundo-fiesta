@@ -1,5 +1,6 @@
-package com.udea.mundofiesta.security.entity;
+package com.udea.mundofiesta.usuario;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,23 +14,12 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_id", nullable = false)
     private Integer id;
-
-    @Column(name = "usr_nombre", nullable = false)
-    private String nombre;
-
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "usr_telefono", nullable = false)
-    private int telefono;
-
-    @Column(name = "usr_direccion", nullable = false)
-    private String direccion;
 
     @Column(name = "usr_tipo_identificacion", nullable = false, length = 2)
     private String tipoIdentificacion;
@@ -37,10 +27,25 @@ public class Usuario {
     @Column(name = "usr_identificacion", nullable = false, unique = true)
     private int identificacion;
 
+    @Column(name = "usr_nombre", nullable = false)
+    private String nombre;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "usr_password", nullable = false)
+    private String password;
+
+    @Column(name = "usr_telefono", nullable = false)
+    private int telefono;
+
+    @Column(name = "usr_direccion", nullable = false)
+    private String direccion;
+
     @Column(name = "usr_tipo_cliente", length = 20)
     private String tipoCliente;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_roles",
             joinColumns = @JoinColumn(name = "usr_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))

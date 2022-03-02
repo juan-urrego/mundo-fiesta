@@ -6,6 +6,7 @@ import com.udea.mundofiesta.usuario.RolNombre;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,6 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(authenticationFilter)
                 .addFilterAfter(authorizationFilter, AuthenticationFilter.class)
                 .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/categorias/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/imagenes/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/pedidos/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/personajes/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/productos/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/tiposProductos/**").permitAll()
                     .antMatchers("/login/**").permitAll()
                     .antMatchers("/usuarios/**").hasAuthority(RolNombre.ROLE_ADMIN.name())
                     .anyRequest().authenticated();

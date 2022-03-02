@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String accessToken = JWT.create()
                 .withSubject(authResult.getName())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(java.sql.Date.valueOf(LocalDate.now().plusDays(5)))
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", authResult.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);

@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tiposProductos")
 @AllArgsConstructor
+@CrossOrigin
 public class TipoProductoController {
 
     final private TipoProductoService tipoProductoService;

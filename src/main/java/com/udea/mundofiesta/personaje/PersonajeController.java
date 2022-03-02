@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/personajes")
 @AllArgsConstructor
+@CrossOrigin
 public class PersonajeController {
 
     final private PersonajeService personajeService;

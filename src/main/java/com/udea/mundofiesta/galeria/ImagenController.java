@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/imagenes")
 @AllArgsConstructor
+@CrossOrigin
 public class ImagenController {
 
     final private ImagenService imagenService;

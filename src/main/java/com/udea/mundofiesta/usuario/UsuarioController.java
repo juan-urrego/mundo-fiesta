@@ -10,6 +10,7 @@ import java.util.List;
 @RequestMapping("/usuarios")
 @RestController
 @AllArgsConstructor
+@CrossOrigin
 public class UsuarioController {
     
     final private UsuarioService usuarioService;

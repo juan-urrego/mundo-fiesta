@@ -29,6 +29,7 @@ public class MundoFiestaApplication {
         };
     }
 
+
     @Bean
     CommandLineRunner run(UsuarioService usuarioService, RolService rolService) {
         return args -> {

@@ -21,6 +21,12 @@ public class ProductoController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/tipoProducto/{nombreTipoProducto}")
+    public ResponseEntity<List<Producto>> getAllByTipoProducto(@PathVariable("nombreTipoProducto") String nombre) {
+        List<Producto> list = productoService.getAllProductsByTipoProducto(nombre);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Producto> getById(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(productoService.getById(id), HttpStatus.OK);

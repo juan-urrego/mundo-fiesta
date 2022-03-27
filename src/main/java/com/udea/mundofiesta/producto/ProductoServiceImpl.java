@@ -1,5 +1,7 @@
 package com.udea.mundofiesta.producto;
 
+import com.udea.mundofiesta.tipoProducto.TipoProducto;
+import com.udea.mundofiesta.tipoProducto.TipoProductoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,16 @@ import java.util.List;
 public class ProductoServiceImpl implements ProductoService {
 
     final private ProductoRepository productoRepository;
-
+    final private TipoProductoService tipoProductoService;
     @Override
     public List<Producto> getAll() {
         return productoRepository.findAll();
+    }
+
+    @Override
+    public List<Producto> getAllProductsByTipoProducto(String nombre) {
+        TipoProducto tipoProducto = tipoProductoService.getByNombre(nombre);
+        return productoRepository.findAllByDetalle_TipoProducto(tipoProducto);
     }
 
     @Override

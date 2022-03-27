@@ -27,6 +27,12 @@ public class TipoProductoServiceImpl implements TipoProductoService {
     }
 
     @Override
+    public TipoProducto getByNombre(String nombre) {
+        return tipoProductoRepository.findByNombre(nombre).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "not found"));
+    }
+
+    @Override
     public TipoProducto save(TipoProducto tipoProducto) {
         return tipoProductoRepository.save(tipoProducto);
     }

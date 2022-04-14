@@ -17,7 +17,7 @@ public class TwilioService {
     public void send(Mensaje mensaje) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         for (int i=0; i<2; i++) {
-            Message message = Message.creator(new PhoneNumber("whatsapp:+57"+mensaje.getNumero()), new PhoneNumber("whatsapp:+14155238886"), mensaje.getMensaje())
+            Message message = Message.creator(new PhoneNumber(mensaje.getNumero()), new PhoneNumber("whatsapp:+14155238886"), mensaje.getMensaje())
                     .create();
         }
         log.info("estamos done");

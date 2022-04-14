@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET, "/personajes/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/productos/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/tiposProductos/**").permitAll()
+                    .antMatchers("/twilio/**").permitAll()
                     .antMatchers("/login/**").permitAll()
                     .antMatchers("/usuarios/**").hasAuthority(RolNombre.ROLE_ADMIN.name())
                     .anyRequest().authenticated();

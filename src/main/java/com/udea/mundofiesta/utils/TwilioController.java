@@ -27,7 +27,7 @@ public class TwilioController {
             @RequestParam("From") String from,
             @RequestParam("Body") String body){
 
-        Mensaje mensaje = new Mensaje(from, "este mensaje es leído por el back y respondido con el siguiente mensaje que acaban de enviar: " + body);
+        Mensaje mensaje = new Mensaje("3128959561", "este mensaje es leído por el back y respondido con el siguiente mensaje que acaban de enviar: " + body + "  :y el from es: " + from);
         service.send(mensaje);
     }
 }

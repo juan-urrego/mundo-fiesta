@@ -23,6 +23,12 @@ public class RolServiceImpl implements RolService {
     }
 
     @Override
+    public Rol getRolById(Integer id) {
+        return rolRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "no encontrado"));
+    }
+
+    @Override
     public Rol save(Rol rol) {
         return rolRepository.save(rol);
     }

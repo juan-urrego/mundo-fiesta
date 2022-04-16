@@ -21,6 +21,7 @@ public class MundoFiestaApplication {
             boolean existsAdmin = rolService.existsAdmin();
             if (!existsAdmin) {
                 rolService.save(new Rol(null, RolNombre.ROLE_ADMIN));
+                rolService.save(new Rol(null, RolNombre.ROLE_USER));
             }
             Rol rolAdmin = rolService.getRolAdmin();
             List<Usuario> usuarios = usuarioService.getAllAdmins();
@@ -33,7 +34,7 @@ public class MundoFiestaApplication {
                         "admin",
                         "admin",
                         "admin",
-                        123,
+                        "132456789",
                         "direccion",
                         "admin",
                         roles));

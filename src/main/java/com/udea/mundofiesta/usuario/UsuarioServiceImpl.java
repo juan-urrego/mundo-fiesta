@@ -21,6 +21,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RolService rolService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -47,6 +48,12 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
+    public Usuario getByTelefono(String telefono) {
+        return usuarioRepository.findByTelefono(telefono).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "no encontrado"));
+    }
+
+    @Override
     public Usuario getByEmail(String email) {
         return usuarioRepository.findByEmail(email).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "no encontrado"));
@@ -64,11 +71,14 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public Usuario save(Usuario usuario) {
+        Rol rol = rolService.getRolById(usuario.getRoles().iterator().next().getId());
         if (existByIdentificacion(usuario.getIdentificacion()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "identificacion ya registrada");
         if (existByEmail(usuario.getEmail()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email ya registrado");
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        if (rol.getNombre().equals(RolNombre.ROLE_USER))
+            usuario.setPassword(passwordEncoder.encode("@fhjq7cbjv4@^mqUHr4Qum6"));
         return usuarioRepository.save(usuario);
     }
 

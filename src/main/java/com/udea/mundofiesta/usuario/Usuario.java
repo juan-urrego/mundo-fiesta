@@ -37,7 +37,7 @@ public class Usuario {
     private String password;
 
     @Column(name = "usr_telefono", nullable = false)
-    private int telefono;
+    private String telefono;
 
     @Column(name = "usr_direccion", nullable = false)
     private String direccion;

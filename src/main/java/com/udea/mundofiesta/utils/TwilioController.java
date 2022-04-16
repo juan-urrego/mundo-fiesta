@@ -1,33 +1,36 @@
 package com.udea.mundofiesta.utils;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.util.MultiValueMap;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/twilio")
 @AllArgsConstructor
+@Slf4j
 public class TwilioController {
 
 
     private final TwilioService service;
 
-    @PostMapping("/send")
-    public void smsSubmit(@RequestBody Mensaje mensaje) {
-
-        service.send(mensaje);
+    @PostMapping("/sendotp")
+    public ResponseEntity<?> sendotp(@RequestParam("telefono") String telefono){
+        Mensaje mensaje = service.startVerification("+57"+telefono);
+        if (mensaje.isValid()){
+            return new ResponseEntity<>("Codigo OTP enviado", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Error al enviar el código ", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping(value = "/receive", produces = "application/xml")
-    @ResponseBody
-    public void receive(
-            @RequestParam("From") String from,
-            @RequestParam("Body") String body){
-
-        Mensaje mensaje = new Mensaje(from, "este mensaje es leído por el back y respondido con el siguiente mensaje que acaban de enviar: " + body + "  :y el from es: " + from);
-        service.send(mensaje);
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyOtp(@RequestParam("telefono") String telefono, @RequestParam("otp") String otp){
+        Mensaje mensaje = service.verificationOtp(telefono, otp);
+        if (mensaje.isValid()){
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Codigo erroneo ", HttpStatus.BAD_REQUEST);
     }
 }

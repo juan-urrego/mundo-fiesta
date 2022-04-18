@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/twilio")
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin
 public class TwilioController {
 
 

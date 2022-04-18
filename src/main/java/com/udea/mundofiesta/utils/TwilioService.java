@@ -31,10 +31,10 @@ public class TwilioService {
             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
             Verification verification = Verification.creator("VA0c8a8c142190d4de024f815e56334ea9", telefono, "whatsapp").create();
             if ("approved".equals(verification.getStatus()) || "pending".equals(verification.getStatus())) {
-                return new Mensaje(verification.getSid(), null, true);
+                return new Mensaje(verification.getSid(), null, null, true);
             }
         } catch (ApiException exception) {
-            return new Mensaje(exception.getMessage(), null, false);
+            return new Mensaje(exception.getMessage(), null, null, false);
         }
         return null;
     }
@@ -52,10 +52,10 @@ public class TwilioService {
                 Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getEmail(), "@fhjq7cbjv4@^mqUHr4Qum6"));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 String jwt = jwtService.generateToken(authentication);
-                return new Mensaje(verificationCheck.getTo(), jwt, true);
+                return new Mensaje(verificationCheck.getTo(), jwt, usuario.getId(), true);
             }
         } catch (ApiException exception) {
-            return new Mensaje(exception.getMessage(), null , false);
+            return new Mensaje(exception.getMessage(), null , null, false);
         }
         return null;
     }

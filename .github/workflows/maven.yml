@@ -24,3 +24,11 @@ jobs:
         cache: maven
     - name: mvn clean install
       run: mvn -B package --file pom.xml
+
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key:  ${{ secrets.HEROKU_API_KEY }}
+        heroku_app_name: "pinatazora"
+        heroku_email: "juan.urrego@udea.edu.co"
+        rollbackonhealthcheckfailed: true
